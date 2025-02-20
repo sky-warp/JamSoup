@@ -7,12 +7,15 @@ namespace _Project.Scripts.Infrastructure
 {
     public class VegSpawner : MonoBehaviour
     {
-        public Draggable[] Vegetables { get; private set; }
+        public Draggable[] GoodVegetables { get; private set; }
+        public Draggable[] BadVegetables { get; private set; }
 
         [SerializeField] private Collider _spawnArea;
+        [SerializeField] private float _badSpawnChance;
 
-        private Vector3 randomPoint;
-        private bool pointFound;
+        private Vector3 _randomPoint;
+        private bool _pointFound;
+        private float _elapsedTime;
 
         private void Start()
         {
@@ -26,16 +29,20 @@ namespace _Project.Scripts.Infrastructure
 
         public void Init(VegetableView vegetableView)
         {
-            Vegetables = vegetableView.Vegetables;
+            GoodVegetables = vegetableView.GoodVegetables;
+            BadVegetables = vegetableView.BadVegetables;
+
+            ShuffleArray(GoodVegetables);
+            ShuffleArray(BadVegetables);
         }
 
         public Vector3 GetRandomPointOnSurface()
         {
-            pointFound = false;
+            _pointFound = false;
 
             Bounds bounds = _spawnArea.bounds;
 
-            while (!pointFound)
+            while (!_pointFound)
             {
                 float randomX = Random.Range(bounds.min.x, bounds.max.x);
                 float randomY = Random.Range(bounds.min.y, bounds.max.y);
@@ -45,9 +52,9 @@ namespace _Project.Scripts.Infrastructure
 
                 if (_spawnArea.Raycast(ray, out RaycastHit hit, bounds.size.y))
                 {
-                    randomPoint = hit.point;
-                    pointFound = true;
-                    return randomPoint;
+                    _randomPoint = hit.point;
+                    _pointFound = true;
+                    return _randomPoint;
                 }
             }
 
@@ -56,21 +63,40 @@ namespace _Project.Scripts.Infrastructure
 
         public IEnumerator SpawnVeg()
         {
-            bool enough = false;
-            int count = 0;
-
-            while (!enough)
+            while (_elapsedTime <= 120.0f)
             {
-                if (count == 10)
-                    enough = true;
+                _elapsedTime += 1;
 
-                count++;
+                if (_elapsedTime >= 60.0f)
+                {
+                    _badSpawnChance *= 2;
+                }
 
-                var randomVegIndex = Random.Range(0, Vegetables.Length);
+                bool isSpawnBad = Random.value <= _badSpawnChance;
 
-                Instantiate(Vegetables[randomVegIndex], GetRandomPointOnSurface(), Quaternion.identity);
+                if (isSpawnBad)
+                {
+                    int randomIndex = Random.Range(0, BadVegetables.Length);
+                    Instantiate(BadVegetables[randomIndex].gameObject, GetRandomPointOnSurface(), Quaternion.identity);
+                }
+                else
+                {
+                    int randomIndex = Random.Range(0, GoodVegetables.Length);
+                    Instantiate(GoodVegetables[randomIndex].gameObject, GetRandomPointOnSurface(), Quaternion.identity);
+                }
 
                 yield return new WaitForSeconds(1f);
+            }
+        }
+
+        private void ShuffleArray<T>(T[] array)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                var temp = array[i];
+                int n = Random.Range(i, array.Length);
+                array[i] = array[n];
+                array[n] = temp;
             }
         }
     }

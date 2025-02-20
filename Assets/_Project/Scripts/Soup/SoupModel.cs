@@ -4,7 +4,7 @@ namespace _Project.Scripts.Soup
 {
     public class SoupModel
     {
-        public ReactiveProperty<int> CurrentScore { get; private set;}
+        public ReactiveProperty<int> CurrentScore { get; private set; }
 
         public SoupModel()
         {
@@ -13,7 +13,8 @@ namespace _Project.Scripts.Soup
 
         public void UpdateScore(int score)
         {
-            CurrentScore.Value += score;
+            if (CurrentScore.Value + score >= 0)
+                CurrentScore.Value += score;
         }
     }
 }

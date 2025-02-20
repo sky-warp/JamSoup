@@ -6,7 +6,8 @@ namespace _Project.Scripts.Vegetables
 {
     public class VegetableView : MonoBehaviour
     {
-        [field:SerializeField] public Draggable[] Vegetables { get; private set; }
+        [field:SerializeField] public Draggable[] GoodVegetables { get; private set; }
+        [field:SerializeField] public Draggable[] BadVegetables { get; private set; }
         
         public Subject<VegetableModel> TransitVegetableModel { get; private set; }
 

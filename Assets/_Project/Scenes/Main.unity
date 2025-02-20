@@ -1662,8 +1662,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28d828e5e43b41719b0287567d894c05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Vegetables>k__BackingField:
+  <GoodVegetables>k__BackingField:
   - {fileID: 6331908116259033204, guid: 4b347fda3ecf8af47836431fbf118ec4, type: 3}
+  <BadVegetables>k__BackingField:
+  - {fileID: 1973299610351923793, guid: f1e6de2388fe70246818103514a896a3, type: 3}
 --- !u!4 &1695111419
 Transform:
   m_ObjectHideFlags: 0
@@ -1673,7 +1675,7 @@ Transform:
   m_GameObject: {fileID: 1695111417}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6334871, y: 0.9985288, z: -1.7492299}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2144,6 +2146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnArea: {fileID: 7516778510270767766}
+  _badSpawnChance: 0.3
 --- !u!4 &2086880430
 Transform:
   m_ObjectHideFlags: 0
