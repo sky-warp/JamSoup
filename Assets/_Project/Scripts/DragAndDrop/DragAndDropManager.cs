@@ -13,6 +13,10 @@ namespace _Project.Scripts.DragAndDrop
         private bool _isDragging;
         private Vector3 _offset;
         private float _initialY;
+        private Vector3 mousePositionWorld;
+        private Vector3 mousePositionScreen;
+
+        public float drag_hight;
 
         private void Awake()
         {
@@ -43,17 +47,25 @@ namespace _Project.Scripts.DragAndDrop
 
             if (Physics.Raycast(cameraRay, out hit, Mathf.Infinity, LayerMask.GetMask("Vegetables")))
             {
+
                 _currentObject = hit.collider;
-                
-                _initialY = _currentObject.transform.position.y;
-                _currentObject.transform.position = new Vector3(
-                    _currentObject.transform.position.x, 
-                    _initialY + 5, 
-                    _currentObject.transform.position.z);
-                
-                _plane = new Plane(_camera.transform.forward, _currentObject.transform.position);
+                //_initialY = _currentObject.transform.position.y;
+                //_currentObject.transform.position = new Vector3(
+                //    _currentObject.transform.position.x,
+                //    _initialY + 5,
+                //    _currentObject.transform.position.z);
+
+                //_plane = new Plane(_camera.transform.forward, _currentObject.transform.position);
+                Vector3 new_pos = _currentObject.transform.position;
+                new_pos.y = drag_hight;
+                //new_pos -= drag_hight * _camera.transform.forward;
+                _plane = new Plane(_camera.transform.forward, new_pos); 
+
                 float distance;
+
                 _plane.Raycast(cameraRay, out distance);
+                _currentObject.transform.position = cameraRay.GetPoint(distance);
+
                 _offset = _currentObject.transform.position - cameraRay.GetPoint(distance);
             }
             else
@@ -76,7 +88,7 @@ namespace _Project.Scripts.DragAndDrop
             float distance;
             _plane.Raycast(cameraRay, out distance);
             Vector3 newPosition = cameraRay.GetPoint(distance) + _offset;
-            newPosition.y = _initialY + 5;
+            newPosition.y = _initialY + drag_hight;
             _currentObject.transform.position = newPosition;
         }
 
