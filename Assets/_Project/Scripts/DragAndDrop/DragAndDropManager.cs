@@ -16,7 +16,12 @@ namespace _Project.Scripts.DragAndDrop
         private Vector3 mousePositionWorld;
         private Vector3 mousePositionScreen;
 
+        private Vector3 _currentVelocity;
+        private Vector3 _lastPosition;
+
+
         public float drag_hight;
+        public float _coefVelocity;
 
         private void Awake()
         {
@@ -67,6 +72,7 @@ namespace _Project.Scripts.DragAndDrop
                 _currentObject.transform.position = cameraRay.GetPoint(distance);
 
                 _offset = _currentObject.transform.position - cameraRay.GetPoint(distance);
+                _lastPosition = _currentObject.transform.position;
             }
             else
             {
@@ -90,6 +96,9 @@ namespace _Project.Scripts.DragAndDrop
             Vector3 newPosition = cameraRay.GetPoint(distance) + _offset;
             newPosition.y = _initialY + drag_hight;
             _currentObject.transform.position = newPosition;
+
+            _currentVelocity = (newPosition - _lastPosition) / Time.deltaTime;
+            _lastPosition = newPosition;
         }
 
         private void Drop()
@@ -97,11 +106,13 @@ namespace _Project.Scripts.DragAndDrop
             if (_currentObject == null)
                 return;
 
-            _currentObject.transform.position = new Vector3(
-                _currentObject.transform.position.x,
-                _currentObject.transform.position.y,
-                _currentObject.transform.position.z
-            );
+            //_currentObject.transform.position = new Vector3(
+            //    _currentObject.transform.position.x,
+            //    _currentObject.transform.position.y,
+            //    _currentObject.transform.position.z
+            //);
+            _currentObject.GetComponent<Rigidbody>().velocity = _currentVelocity * _coefVelocity;
+
 
             _currentObject = null;
         }

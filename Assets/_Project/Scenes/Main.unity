@@ -2493,6 +2493,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pauseMenuController: {fileID: 1079275082}
+  drag_hight: 5
+  _coefVelocity: 0.25
 --- !u!4 &1937506463
 Transform:
   m_ObjectHideFlags: 0
@@ -2642,6 +2644,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b30c29139ac84f81b9fb4d2f7da42539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0020753816
+      value: 0.99988383
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.29428586
+      value: 0.76007634
+      inSlope: 1.8435186
+      outSlope: 1.8435186
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.16859652
+      outWeight: 0.08018426
+    - serializedVersion: 3
+      time: 0.5017229
+      value: 0.6325747
+      inSlope: 0.38605994
+      outSlope: 0.38605994
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.54282755
+    - serializedVersion: 3
+      time: 0.9978485
+      value: 0.020446777
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _spawnArea:
   - {fileID: 7516778510270767766}
   - {fileID: 4798207038491593443}
