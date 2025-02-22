@@ -11,11 +11,14 @@ namespace _Project.Scripts.Infrastructure
     {
         public Vegetable[] GoodVegetables { get; private set; }
         public Vegetable[] BadVegetables { get; private set; }
-        public Action<Vegetable> OnSpawnedVegetable;
+        public Action<Vegetable, Vector3> OnSpawnedVegetable;
 
         [SerializeField] private Collider[] _spawnArea;
+        [SerializeField] private Transform[] _hideAreas;
+        [SerializeField] private Transform _potArea;
         [SerializeField] private float _badSpawnChance;
         [SerializeField] private float _maxSpawnIntervalValue;
+        [SerializeField] private float _maxMoveIntervalValue;
 
         private Vector3 _randomPoint;
         private bool _pointFound;
@@ -69,12 +72,24 @@ namespace _Project.Scripts.Infrastructure
         public IEnumerator SpawnVeg()
         {
             while (_elapsedTime <= 180.0f)
-            {
-                if (_elapsedTime >= 60.0f)
+            { 
+                if (_elapsedTime >= 180.0f)
+                {
+                }
+                
+                else if (_elapsedTime >= 120.0f)
                 {
                     _badSpawnChance *= 2;
                     _maxSpawnIntervalValue /= 2;
+                    _maxMoveIntervalValue /= 2;
                 }
+                
+                else if (_elapsedTime >= 60.0f)
+                {
+                    _badSpawnChance *= 2;
+                    _maxSpawnIntervalValue /= 2;
+                    _maxMoveIntervalValue /= 2;
+                }   
 
                 _elapsedTime += 1;
 
@@ -91,7 +106,10 @@ namespace _Project.Scripts.Infrastructure
 
                     var currentVeg = currentVegGameObj.GetComponent<Vegetable>();
                     currentVeg.ObjectIsSpawned();
-                    OnSpawnedVegetable?.Invoke(currentVeg);
+                    float moveTime = Random.Range(0, _maxMoveIntervalValue);
+                    
+                    yield return new WaitForSeconds(moveTime);
+                    OnSpawnedVegetable?.Invoke(currentVeg, _potArea.position);
                 }
                 else
                 {
@@ -101,7 +119,11 @@ namespace _Project.Scripts.Infrastructure
 
                     var currentVeg = currentVegGameObj.GetComponent<Vegetable>();
                     currentVeg.ObjectIsSpawned();
-                    OnSpawnedVegetable?.Invoke(currentVeg);
+                    float moveTime = Random.Range(0, _maxMoveIntervalValue);
+                    
+                    yield return new WaitForSeconds(moveTime);
+                    var randomHideArea = _hideAreas[Random.Range(0, _hideAreas.Length)];
+                    OnSpawnedVegetable?.Invoke(currentVeg, randomHideArea.position);
                 }
 
                 yield return new WaitForSeconds(spawnTime);

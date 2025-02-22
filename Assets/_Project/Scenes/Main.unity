@@ -640,11 +640,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <VegetableSpawner>k__BackingField: {fileID: 2086880429}
-  <HidePoints>k__BackingField:
-  - {fileID: 485987649}
-  - {fileID: 846378334}
-  - {fileID: 31098456}
-  - {fileID: 230361785}
 --- !u!4 &667400521
 Transform:
   m_ObjectHideFlags: 0
@@ -958,7 +953,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1065271960390489845, guid: 224ded0df5821264ba21959f0c67b46f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.1
+      value: 4.1
       objectReference: {fileID: 0}
     - target: {fileID: 1065271960390489845, guid: 224ded0df5821264ba21959f0c67b46f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2647,8 +2642,15 @@ MonoBehaviour:
   - {fileID: 4798207038491593443}
   - {fileID: 725069298}
   - {fileID: 386536320}
+  _hideAreas:
+  - {fileID: 485987649}
+  - {fileID: 846378334}
+  - {fileID: 31098456}
+  - {fileID: 230361785}
+  _potArea: {fileID: 1012449385}
   _badSpawnChance: 0.3
   _maxSpawnIntervalValue: 3
+  _maxMoveIntervalValue: 2
 --- !u!4 &2086880430
 Transform:
   m_ObjectHideFlags: 0
