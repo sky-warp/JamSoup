@@ -87,7 +87,7 @@ namespace _Project.Scripts.DragAndDrop
 
             _currentObject.transform.position = new Vector3(
                 _currentObject.transform.position.x,
-                _initialY,
+                _currentObject.transform.position.y,
                 _currentObject.transform.position.z
             );
 

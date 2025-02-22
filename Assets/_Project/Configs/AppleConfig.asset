@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Apple
   <Score>k__BackingField: 20
+  <Speed>k__BackingField: 100
+  <IsGood>k__BackingField: 1

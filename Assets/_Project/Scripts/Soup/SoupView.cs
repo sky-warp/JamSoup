@@ -3,12 +3,14 @@ using _Project.Scripts.Vegetables;
 using R3;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace _Project.Scripts.Soup
 {
     public class SoupView : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _text;
+        [SerializeField] private Image _healthBarImage;
         [SerializeField] private OnPotDrop _pot;
 
         private SoupViewModel _viewModel;
@@ -35,7 +37,16 @@ namespace _Project.Scripts.Soup
 
         private void UpdateViewScore(int score)
         {
+            if (score < 0)
+            {
+                UpdateHealth(Mathf.Abs(score));
+            }
+            
             _text.text = score.ToString();
+        }
+        private void UpdateHealth(int score)
+        {
+            _healthBarImage.fillAmount -= score / 100f;
         }
 
         private void OnDestroy()

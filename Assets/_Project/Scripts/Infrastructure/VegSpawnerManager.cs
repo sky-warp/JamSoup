@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using _Project.Scripts.VegetableEntity;
 using _Project.Scripts.Vegetables;
@@ -6,13 +7,15 @@ using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.Infrastructure
 {
-    public class VegSpawner : MonoBehaviour
+    public class VegSpawnerManager : MonoBehaviour
     {
         public Vegetable[] GoodVegetables { get; private set; }
         public Vegetable[] BadVegetables { get; private set; }
+        public Action<Vegetable> OnSpawnedVegetable;
 
-        [SerializeField] private Collider _spawnArea;
+        [SerializeField] private Collider[] _spawnArea;
         [SerializeField] private float _badSpawnChance;
+        [SerializeField] private float _maxSpawnIntervalValue;
 
         private Vector3 _randomPoint;
         private bool _pointFound;
@@ -41,7 +44,8 @@ namespace _Project.Scripts.Infrastructure
         {
             _pointFound = false;
 
-            Bounds bounds = _spawnArea.bounds;
+            int randomIndex = Random.Range(0, _spawnArea.Length);
+            Bounds bounds = _spawnArea[randomIndex].bounds;
 
             while (!_pointFound)
             {
@@ -51,7 +55,7 @@ namespace _Project.Scripts.Infrastructure
 
                 Ray ray = new Ray(new Vector3(randomX, randomY, randomZ), Vector3.down);
 
-                if (_spawnArea.Raycast(ray, out RaycastHit hit, bounds.size.y))
+                if (_spawnArea[randomIndex].Raycast(ray, out RaycastHit hit, bounds.size.y))
                 {
                     _randomPoint = hit.point;
                     _pointFound = true;
@@ -64,33 +68,43 @@ namespace _Project.Scripts.Infrastructure
 
         public IEnumerator SpawnVeg()
         {
-            while (_elapsedTime <= 120.0f)
+            while (_elapsedTime <= 180.0f)
             {
-                _elapsedTime += 1;
-
                 if (_elapsedTime >= 60.0f)
                 {
                     _badSpawnChance *= 2;
+                    _maxSpawnIntervalValue /= 2;
                 }
+
+                _elapsedTime += 1;
+
+                float spawnTime = Random.Range(0f, _maxSpawnIntervalValue);
+
 
                 bool isSpawnBad = Random.value <= _badSpawnChance;
 
                 if (isSpawnBad)
                 {
                     int randomIndex = Random.Range(0, BadVegetables.Length);
-                    var currentVeg = Instantiate(BadVegetables[randomIndex].gameObject, GetRandomPointOnSurface(), Quaternion.identity);
-                    
-                    currentVeg.GetComponent<Vegetable>().ObjectIsSpawned();
+                    var currentVegGameObj = Instantiate(BadVegetables[randomIndex].gameObject, GetRandomPointOnSurface(),
+                        Quaternion.identity);
+
+                    var currentVeg = currentVegGameObj.GetComponent<Vegetable>();
+                    currentVeg.ObjectIsSpawned();
+                    OnSpawnedVegetable?.Invoke(currentVeg);
                 }
                 else
                 {
                     int randomIndex = Random.Range(0, GoodVegetables.Length);
-                    var currentVeg = Instantiate(GoodVegetables[randomIndex].gameObject, GetRandomPointOnSurface(), Quaternion.identity);
-                    
-                    currentVeg.GetComponent<Vegetable>().ObjectIsSpawned();
+                    var currentVegGameObj = Instantiate(GoodVegetables[randomIndex].gameObject, GetRandomPointOnSurface(),
+                        Quaternion.identity);
+
+                    var currentVeg = currentVegGameObj.GetComponent<Vegetable>();
+                    currentVeg.ObjectIsSpawned();
+                    OnSpawnedVegetable?.Invoke(currentVeg);
                 }
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(spawnTime);
             }
         }
 

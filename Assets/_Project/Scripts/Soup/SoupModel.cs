@@ -13,8 +13,10 @@ namespace _Project.Scripts.Soup
 
         public void UpdateScore(int score)
         {
-            if (CurrentScore.Value + score >= 0)
-                CurrentScore.Value += score;
+            CurrentScore.Value += score;
+            
+            if(CurrentScore.Value < 0)
+                CurrentScore.Value = 0;
         }
     }
 }

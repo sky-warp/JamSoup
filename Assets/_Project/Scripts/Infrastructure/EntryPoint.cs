@@ -8,7 +8,7 @@ namespace _Project.Scripts.Infrastructure
     {
         [SerializeField] private SoupView _soupView;
         [SerializeField] private VegetableView _vegetableView;
-        [SerializeField] private VegSpawner _vegSpawner;
+        [SerializeField] private VegSpawnerManager vegSpawnerManager;
 
         private SoupViewModel soupViewModel;
 
@@ -22,7 +22,7 @@ namespace _Project.Scripts.Infrastructure
             soupViewModel = new SoupViewModel(soupModel);
             _soupView.Init(soupViewModel, _vegetableView);
 
-            _vegSpawner.Init(_vegetableView);
+            vegSpawnerManager.Init(_vegetableView);
         }
 
         private void OnDestroy()
