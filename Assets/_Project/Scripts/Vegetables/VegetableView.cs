@@ -1,4 +1,5 @@
 using _Project.Scripts.Infrastructure;
+using _Project.Scripts.VegetableEntity;
 using R3;
 using UnityEngine;
 
@@ -6,8 +7,8 @@ namespace _Project.Scripts.Vegetables
 {
     public class VegetableView : MonoBehaviour
     {
-        [field:SerializeField] public Draggable[] GoodVegetables { get; private set; }
-        [field:SerializeField] public Draggable[] BadVegetables { get; private set; }
+        [field:SerializeField] public Vegetable[] GoodVegetables { get; private set; }
+        [field:SerializeField] public Vegetable[] BadVegetables { get; private set; }
         
         public Subject<VegetableModel> TransitVegetableModel { get; private set; }
 
@@ -20,7 +21,7 @@ namespace _Project.Scripts.Vegetables
             TransitVegetableModel = new Subject<VegetableModel>();
         }
 
-        public void CreateDroppedVegetable(Draggable vegetable)
+        public void CreateDroppedVegetable(Vegetable vegetable)
         {
             TransitVegetableModel.OnNext(_vegetableController.CreateNewVegetable(vegetable.Config));
         }

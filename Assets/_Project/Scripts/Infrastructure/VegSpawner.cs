@@ -1,4 +1,5 @@
 using System.Collections;
+using _Project.Scripts.VegetableEntity;
 using _Project.Scripts.Vegetables;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -7,8 +8,8 @@ namespace _Project.Scripts.Infrastructure
 {
     public class VegSpawner : MonoBehaviour
     {
-        public Draggable[] GoodVegetables { get; private set; }
-        public Draggable[] BadVegetables { get; private set; }
+        public Vegetable[] GoodVegetables { get; private set; }
+        public Vegetable[] BadVegetables { get; private set; }
 
         [SerializeField] private Collider _spawnArea;
         [SerializeField] private float _badSpawnChance;
@@ -77,12 +78,16 @@ namespace _Project.Scripts.Infrastructure
                 if (isSpawnBad)
                 {
                     int randomIndex = Random.Range(0, BadVegetables.Length);
-                    Instantiate(BadVegetables[randomIndex].gameObject, GetRandomPointOnSurface(), Quaternion.identity);
+                    var currentVeg = Instantiate(BadVegetables[randomIndex].gameObject, GetRandomPointOnSurface(), Quaternion.identity);
+                    
+                    currentVeg.GetComponent<Vegetable>().ObjectIsSpawned();
                 }
                 else
                 {
                     int randomIndex = Random.Range(0, GoodVegetables.Length);
-                    Instantiate(GoodVegetables[randomIndex].gameObject, GetRandomPointOnSurface(), Quaternion.identity);
+                    var currentVeg = Instantiate(GoodVegetables[randomIndex].gameObject, GetRandomPointOnSurface(), Quaternion.identity);
+                    
+                    currentVeg.GetComponent<Vegetable>().ObjectIsSpawned();
                 }
 
                 yield return new WaitForSeconds(1f);

@@ -12,6 +12,7 @@ namespace _Project.Scripts.DragAndDrop
         private Plane _plane;
         private bool _isDragging;
         private Vector3 _offset;
+        private float _initialY;
 
         private void Awake()
         {
@@ -43,6 +44,13 @@ namespace _Project.Scripts.DragAndDrop
             if (Physics.Raycast(cameraRay, out hit, Mathf.Infinity, LayerMask.GetMask("Vegetables")))
             {
                 _currentObject = hit.collider;
+                
+                _initialY = _currentObject.transform.position.y;
+                _currentObject.transform.position = new Vector3(
+                    _currentObject.transform.position.x, 
+                    _initialY + 5, 
+                    _currentObject.transform.position.z);
+                
                 _plane = new Plane(_camera.transform.forward, _currentObject.transform.position);
                 float distance;
                 _plane.Raycast(cameraRay, out distance);
@@ -57,21 +65,19 @@ namespace _Project.Scripts.DragAndDrop
         private void DragAndDrop()
         {
             if (_currentObject == null)
+            {
+                Cursor.visible = true;
                 return;
+            }
 
+            Cursor.visible = false;
             Ray cameraRay = _camera.ScreenPointToRay(Input.mousePosition);
 
             float distance;
             _plane.Raycast(cameraRay, out distance);
-            _currentObject.transform.position = cameraRay.GetPoint(distance) + _offset;
-
-            /*if (_currentObject.transform.position.y < 0.5f)
-            {
-                _currentObject.transform.position = new Vector3(
-                    _currentObject.transform.position.x,
-                    0.5f,
-                    _currentObject.transform.position.z);
-            }*/
+            Vector3 newPosition = cameraRay.GetPoint(distance) + _offset;
+            newPosition.y = _initialY + 5;
+            _currentObject.transform.position = newPosition;
         }
 
         private void Drop()
@@ -81,7 +87,7 @@ namespace _Project.Scripts.DragAndDrop
 
             _currentObject.transform.position = new Vector3(
                 _currentObject.transform.position.x,
-                _currentObject.transform.position.y,
+                _initialY,
                 _currentObject.transform.position.z
             );
 
