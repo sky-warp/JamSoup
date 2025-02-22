@@ -12,8 +12,9 @@ namespace _Project.Scripts.VegetableEntity
 
         public float Speed { get; private set; }
         public bool IsGood { get; private set; }
+        public bool IsReadyForMove { get; private set; }
 
-        private void Start()
+        private void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();
             Speed = Config.Speed;
@@ -23,6 +24,11 @@ namespace _Project.Scripts.VegetableEntity
         public void ObjectIsSpawned()
         {
             IsSpawned = true;
+        }
+
+        public void ReadyForMove()
+        {
+            IsReadyForMove = true;
         }
     }
 }
