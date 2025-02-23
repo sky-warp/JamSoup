@@ -36,7 +36,7 @@ namespace _Project.Scripts.Infrastructure
         {
             _elapsedTime += Time.deltaTime;
 
-            if (_elapsedTime > 10.0f)
+            if (_elapsedTime > 180.0f)
             {
                 OnGameEnded?.Invoke();
             }
