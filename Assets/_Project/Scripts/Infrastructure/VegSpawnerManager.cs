@@ -29,7 +29,6 @@ namespace _Project.Scripts.Infrastructure
         private void Start()
         {
             StartCoroutine(SpawnVeg());
-
         }
 
         private void OnDestroy()
@@ -78,31 +77,11 @@ namespace _Project.Scripts.Infrastructure
             
 
             while (_elapsedTime <= 180.0f)
-
             {
 
                 float value = curve.Evaluate(_elapsedTime / 180.0f);
              
                 _maxSpawnIntervalValue = value * 3.0f;
-
-
-//                 if (_elapsedTime >= 180.0f)
-//                 {
-//                 }
-                
-//                 else if (_elapsedTime >= 120.0f)
-//                 {
-//                     _badSpawnChance *= 2;
-//                     _maxSpawnIntervalValue /= 2;
-//                     _maxMoveIntervalValue /= 2;
-//                 }
-                
-//                 else if (_elapsedTime >= 60.0f)
-//                 {
-//                     _badSpawnChance *= 2;
-//                     _maxSpawnIntervalValue /= 2;
-//                     _maxMoveIntervalValue /= 2;
-//                 }   
 
                 _elapsedTime += 1;
 
@@ -122,6 +101,8 @@ namespace _Project.Scripts.Infrastructure
                     float moveTime = Random.Range(0, _maxMoveIntervalValue);
                     
                     yield return new WaitForSeconds(moveTime);
+                    
+                   
                     OnSpawnedVegetable?.Invoke(currentVeg, _potArea.position);
                 }
                 else
@@ -140,6 +121,11 @@ namespace _Project.Scripts.Infrastructure
                 }
 
                 yield return new WaitForSeconds(spawnTime);
+            }
+
+            if (_elapsedTime >= 180.0f)
+            {
+                
             }
         }
 

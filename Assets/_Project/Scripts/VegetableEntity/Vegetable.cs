@@ -11,6 +11,7 @@ namespace _Project.Scripts.VegetableEntity
         public bool IsSpawned { get; private set; }
 
         public float Speed { get; private set; }
+        public int Score { get; private set; }
         public bool IsGood { get; private set; }
         public bool IsReadyForMove { get; private set; }
 
@@ -18,7 +19,13 @@ namespace _Project.Scripts.VegetableEntity
         {
             Rigidbody = GetComponent<Rigidbody>();
             Speed = Config.Speed;
+            Score = Config.Score;
             IsGood = Config.IsGood;
+        }
+
+        private void OnBecameInvisible()
+        {
+            gameObject.SetActive(false);
         }
 
         public void ObjectIsSpawned()

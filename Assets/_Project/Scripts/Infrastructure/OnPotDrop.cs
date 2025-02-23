@@ -6,9 +6,9 @@ namespace _Project.Scripts.Infrastructure
 {
     [RequireComponent(typeof(BoxCollider))]
     public class OnPotDrop : MonoBehaviour
-    { 
+    {
         public Subject<Vegetable> OnPotDropped = new();
-        
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.GetComponent<Vegetable>())

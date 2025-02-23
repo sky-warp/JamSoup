@@ -5,8 +5,11 @@ namespace _Project.Scripts.Soup
 {
     public class SoupViewModel
     {
-        public ReactiveProperty<int> ViewScore { get; private set; }
+        public ReactiveProperty<int> ScoreView { get; private set; }
         public ReactiveProperty<VegetableModel> Vegetable { get; private set; }
+        public ReactiveProperty<bool> WinConditionView { get; private set; }
+
+        public float MaxScoreView { get; private set; }
 
         private SoupModel _soupModel;
         private CompositeDisposable _disposable;
@@ -14,11 +17,15 @@ namespace _Project.Scripts.Soup
         public SoupViewModel(SoupModel soupModel)
         {
             _soupModel = soupModel;
+            MaxScoreView = _soupModel.MaxScore;
 
             Vegetable = new ReactiveProperty<VegetableModel>();
             Vegetable.Subscribe(UpdateModelScore);
 
-            ViewScore = _soupModel.CurrentScore;
+            WinConditionView = new ReactiveProperty<bool>();
+            WinConditionView = _soupModel.WinComdition;
+            
+            ScoreView = _soupModel.CurrentScore;
         }
 
         private void UpdateModelScore(VegetableModel obj)

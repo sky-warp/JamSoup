@@ -12,41 +12,59 @@ namespace _Project.Scripts.Soup
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private Image _healthBarImage;
         [SerializeField] private OnPotDrop _pot;
+        [SerializeField] private OnBadVegetableDrop _badVegetableDropArea;
 
         private SoupViewModel _viewModel;
         private VegetableView _vegetableView;
         private CompositeDisposable _disposable = new();
+        private float _maxScore;
 
         public void Init(SoupViewModel viewModel, VegetableView vegetableView)
         {
             _viewModel = viewModel;
             _vegetableView = vegetableView;
 
+            _maxScore = _viewModel.MaxScoreView;
+
             _pot.OnPotDropped
                 .Subscribe(_vegetableView.CreateDroppedVegetable)
+                .AddTo(_disposable);
+
+            _badVegetableDropArea.OnBadVegetableDroped
+                .Subscribe(UpdateHealth)
                 .AddTo(_disposable);
 
             vegetableView.TransitVegetableModel
                 .Subscribe(vegetable => _viewModel.Vegetable.Value = vegetable)
                 .AddTo(_disposable);
 
-            _viewModel.ViewScore
-                .Subscribe(UpdateViewScore)
+            _viewModel.ScoreView
+                .Subscribe(UpdateHealth)
+                .AddTo(_disposable);
+
+            viewModel.WinConditionView
+                .Subscribe(CheckWin)
                 .AddTo(_disposable);
         }
 
         private void UpdateViewScore(int score)
         {
-            if (score < 0)
-            {
-                UpdateHealth(Mathf.Abs(score));
-            }
-            
             _text.text = score.ToString();
         }
+
         private void UpdateHealth(int score)
         {
-            _healthBarImage.fillAmount -= score / 100f;
+            if (Mathf.Sign(score) < 0)
+                _healthBarImage.fillAmount -= score / _maxScore;
+            else
+                _healthBarImage.fillAmount += score / _maxScore;
+        }
+
+        private void CheckWin(bool isWin)
+        {
+            if (isWin)
+            {
+            }
         }
 
         private void OnDestroy()

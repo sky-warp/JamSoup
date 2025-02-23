@@ -23,10 +23,13 @@ namespace _Project.Scripts.VegetablesBehaviourManager
 
         public void GetCurrentVegetables(Vegetable vegetable, Vector3 targetPosition)
         {
-            vegetable.transform.rotation = GetRandomDirection();
+            if (vegetable != null)
+            {
+                vegetable.transform.rotation = GetRandomDirection();
             
-            vegetable.GetComponent<Force.Force>().FindTargetPosition(targetPosition);
-            vegetable.ReadyForMove();
+                vegetable.GetComponent<Force.Force>().FindTargetPosition(targetPosition);
+                vegetable.ReadyForMove();
+            }
         }
         
         private Quaternion GetRandomDirection()
