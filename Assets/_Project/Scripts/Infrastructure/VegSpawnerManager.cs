@@ -13,6 +13,8 @@ namespace _Project.Scripts.Infrastructure
         public Vegetable[] BadVegetables { get; private set; }
         public Action<Vegetable, Vector3> OnSpawnedVegetable;
 
+        public AnimationCurve curve;
+
         [SerializeField] private Collider[] _spawnArea;
         [SerializeField] private Transform[] _hideAreas;
         [SerializeField] private Transform _potArea;
@@ -27,6 +29,7 @@ namespace _Project.Scripts.Infrastructure
         private void Start()
         {
             StartCoroutine(SpawnVeg());
+
         }
 
         private void OnDestroy()
@@ -71,29 +74,39 @@ namespace _Project.Scripts.Infrastructure
 
         public IEnumerator SpawnVeg()
         {
+
+            
+
             while (_elapsedTime <= 180.0f)
-            { 
-                if (_elapsedTime >= 180.0f)
-                {
-                }
+
+            {
+
+                float value = curve.Evaluate(_elapsedTime / 180.0f);
+             
+                _maxSpawnIntervalValue = value * 3.0f;
+
+
+//                 if (_elapsedTime >= 180.0f)
+//                 {
+//                 }
                 
-                else if (_elapsedTime >= 120.0f)
-                {
-                    _badSpawnChance *= 2;
-                    _maxSpawnIntervalValue /= 2;
-                    _maxMoveIntervalValue /= 2;
-                }
+//                 else if (_elapsedTime >= 120.0f)
+//                 {
+//                     _badSpawnChance *= 2;
+//                     _maxSpawnIntervalValue /= 2;
+//                     _maxMoveIntervalValue /= 2;
+//                 }
                 
-                else if (_elapsedTime >= 60.0f)
-                {
-                    _badSpawnChance *= 2;
-                    _maxSpawnIntervalValue /= 2;
-                    _maxMoveIntervalValue /= 2;
-                }   
+//                 else if (_elapsedTime >= 60.0f)
+//                 {
+//                     _badSpawnChance *= 2;
+//                     _maxSpawnIntervalValue /= 2;
+//                     _maxMoveIntervalValue /= 2;
+//                 }   
 
                 _elapsedTime += 1;
 
-                float spawnTime = Random.Range(0f, _maxSpawnIntervalValue);
+                float spawnTime = Random.Range(0.1f, _maxSpawnIntervalValue);
 
 
                 bool isSpawnBad = Random.value <= _badSpawnChance;
