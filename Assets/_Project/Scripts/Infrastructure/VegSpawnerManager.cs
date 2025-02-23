@@ -12,6 +12,7 @@ namespace _Project.Scripts.Infrastructure
         public Vegetable[] GoodVegetables { get; private set; }
         public Vegetable[] BadVegetables { get; private set; }
         public Action<Vegetable, Vector3> OnSpawnedVegetable;
+        public Action OnGameEnded;
 
         public AnimationCurve curve;
 
@@ -24,11 +25,21 @@ namespace _Project.Scripts.Infrastructure
 
         private Vector3 _randomPoint;
         private bool _pointFound;
-        private float _elapsedTime;
+        private float _elapsedTime = 0f;
 
         private void Start()
         {
             StartCoroutine(SpawnVeg());
+        }
+
+        private void Update()
+        {
+            _elapsedTime += Time.deltaTime;
+
+            if (_elapsedTime > 10.0f)
+            {
+                OnGameEnded?.Invoke();
+            }
         }
 
         private void OnDestroy()
@@ -73,18 +84,12 @@ namespace _Project.Scripts.Infrastructure
 
         public IEnumerator SpawnVeg()
         {
-
-            
-
             while (_elapsedTime <= 180.0f)
             {
-
                 float value = curve.Evaluate(_elapsedTime / 180.0f);
              
                 _maxSpawnIntervalValue = value * 3.0f;
-
-                _elapsedTime += 1;
-
+                
                 float spawnTime = Random.Range(0.1f, _maxSpawnIntervalValue);
 
 
@@ -121,11 +126,6 @@ namespace _Project.Scripts.Infrastructure
                 }
 
                 yield return new WaitForSeconds(spawnTime);
-            }
-
-            if (_elapsedTime >= 180.0f)
-            {
-                
             }
         }
 

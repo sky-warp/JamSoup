@@ -6,6 +6,7 @@ namespace _Project.Scripts.Soup
     public class SoupViewModel
     {
         public ReactiveProperty<int> ScoreView { get; private set; }
+        public ReactiveProperty<int> AddedScoreView { get; private set; }
         public ReactiveProperty<VegetableModel> Vegetable { get; private set; }
         public ReactiveProperty<bool> WinConditionView { get; private set; }
 
@@ -26,6 +27,7 @@ namespace _Project.Scripts.Soup
             WinConditionView = _soupModel.WinComdition;
             
             ScoreView = _soupModel.CurrentScore;
+            AddedScoreView = _soupModel.AddedScore;
         }
 
         private void UpdateModelScore(VegetableModel obj)

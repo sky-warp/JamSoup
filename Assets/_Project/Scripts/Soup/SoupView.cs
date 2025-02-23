@@ -13,6 +13,9 @@ namespace _Project.Scripts.Soup
         [SerializeField] private Image _healthBarImage;
         [SerializeField] private OnPotDrop _pot;
         [SerializeField] private OnBadVegetableDrop _badVegetableDropArea;
+        [SerializeField] private VegSpawnerManager _spawnManager;
+        [SerializeField] private GameObject _endGameWindow;
+        [SerializeField] private TextMeshProUGUI _finalScoreText;
 
         private SoupViewModel _viewModel;
         private VegetableView _vegetableView;
@@ -40,11 +43,13 @@ namespace _Project.Scripts.Soup
 
             _viewModel.ScoreView
                 .Subscribe(UpdateHealth)
+                .AddTo(_disposable); 
+            
+            _viewModel.AddedScoreView
+                .Subscribe(SubstractHealth)
                 .AddTo(_disposable);
 
-            viewModel.WinConditionView
-                .Subscribe(CheckWin)
-                .AddTo(_disposable);
+            _spawnManager.OnGameEnded += GameEnd;
         }
 
         private void UpdateViewScore(int score)
@@ -54,22 +59,24 @@ namespace _Project.Scripts.Soup
 
         private void UpdateHealth(int score)
         {
-            if (Mathf.Sign(score) < 0)
-                _healthBarImage.fillAmount -= score / _maxScore;
-            else
-                _healthBarImage.fillAmount += score / _maxScore;
+            _healthBarImage.fillAmount += score / _maxScore;
         }
 
-        private void CheckWin(bool isWin)
+        private void SubstractHealth(int score)
         {
-            if (isWin)
-            {
-            }
+            _healthBarImage.fillAmount += score / _maxScore;
         }
 
+        private void GameEnd()
+        {
+            _endGameWindow.SetActive(true);
+            _finalScoreText.text = $"Final score: {_viewModel.ScoreView}";
+        }
+        
         private void OnDestroy()
         {
             _disposable?.Dispose();
+            _spawnManager.OnGameEnded -= GameEnd;
         }
     }
 }
