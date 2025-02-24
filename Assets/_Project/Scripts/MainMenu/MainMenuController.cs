@@ -9,16 +9,21 @@ namespace _Project.Scripts.MainMenu
         [SerializeField] private Button _startGameButton;
         [SerializeField] private Button _quitGameButton;
         [SerializeField] private Button _optionsButton;
-        [SerializeField] private Button _backToMainMenuButton;
+        [SerializeField] private Button _backToMainMenuFromOptionsButton;
+        [SerializeField] private Button _tutorialButton;
+        [SerializeField] private Button _backToMainMenuFromTutorialButton;
 
         [SerializeField] private GameObject _optionsMenu;
+        [SerializeField] private GameObject _tutorialMenu;
 
         private void Awake()
         {
             _startGameButton.onClick.AddListener(PlayGame);
             _quitGameButton.onClick.AddListener(QuitGame);
             _optionsButton.onClick.AddListener(ShowOptionsMenu);
-            _backToMainMenuButton.onClick.AddListener(BackToMainMenu);
+            _backToMainMenuFromOptionsButton.onClick.AddListener(BackToMainMenuFromOptions);
+            _tutorialButton.onClick.AddListener(ShowTutorial);
+            _backToMainMenuFromTutorialButton.onClick.AddListener(BackToMainMenuFromTutorial);
         }
 
         private void OnDestroy()
@@ -26,7 +31,8 @@ namespace _Project.Scripts.MainMenu
             _startGameButton.onClick.RemoveAllListeners();
             _quitGameButton.onClick.RemoveAllListeners();
             _optionsButton.onClick.RemoveAllListeners();
-            _backToMainMenuButton.onClick.RemoveAllListeners();
+            _backToMainMenuFromOptionsButton.onClick.RemoveAllListeners();
+            _tutorialButton.onClick.RemoveAllListeners();
         }
 
         private void PlayGame()
@@ -45,9 +51,21 @@ namespace _Project.Scripts.MainMenu
             gameObject.SetActive(false);
         }
 
-        private void BackToMainMenu()
+        private void BackToMainMenuFromOptions()
         {
             _optionsMenu.SetActive(false);
+            gameObject.SetActive(true);
+        }
+
+        private void ShowTutorial()
+        {
+            _tutorialMenu.SetActive(true);
+            gameObject.SetActive(false);
+        }
+
+        private void BackToMainMenuFromTutorial()
+        {
+            _tutorialMenu.SetActive(false);
             gameObject.SetActive(true);
         }
     }

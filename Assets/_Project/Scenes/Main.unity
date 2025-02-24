@@ -519,7 +519,7 @@ AudioSource:
   m_GameObject: {fileID: 480728327}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 6ba88b3e46db1064681e5e5c5c0ac137, type: 2}
   m_audioClip: {fileID: 8300000, guid: a7c55dece0c626a48977a4895213af1d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1832,7 +1832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3e59a28c86647bfa2f4970c77383cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioManager: {fileID: 791114909}
+  gameplayAudioManager: {fileID: 0}
 --- !u!65 &1220234374
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1966,7 +1966,7 @@ AudioSource:
   m_GameObject: {fileID: 1287194491}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 6ba88b3e46db1064681e5e5c5c0ac137, type: 2}
   m_audioClip: {fileID: 8300000, guid: 47921c784a2050c49ab2d717d0cbae40, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -3725,7 +3725,7 @@ AudioSource:
   m_GameObject: {fileID: 2114446027}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 6ba88b3e46db1064681e5e5c5c0ac137, type: 2}
   m_audioClip: {fileID: 8300000, guid: e6f5996586fb38d4eaa7bb1c1387848c, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -4049,6 +4049,10 @@ PrefabInstance:
       propertyPath: _badVegetableDrop
       value: 
       objectReference: {fileID: 1220234373}
+    - target: {fileID: 3684207133159172543, guid: 224ded0df5821264ba21959f0c67b46f, type: 3}
+      propertyPath: gameplayAudioManager
+      value: 
+      objectReference: {fileID: 791114909}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

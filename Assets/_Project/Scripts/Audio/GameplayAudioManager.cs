@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace _Project.Scripts
+namespace _Project.Scripts.Audio
 {
-    public class AudioManager : MonoBehaviour
+    public class GameplayAudioManager : MonoBehaviour
     {
         [SerializeField] private AudioSource _correct;
         [SerializeField] private AudioSource _incorrect;
