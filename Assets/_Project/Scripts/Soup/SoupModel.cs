@@ -4,29 +4,26 @@ namespace _Project.Scripts.Soup
 {
     public class SoupModel
     {
-        public ReactiveProperty<int> CurrentScore { get; private set; }
-        public ReactiveProperty<int> AddedScore { get; private set; }
+        public ReactiveProperty<float> CurrentScore { get; private set; }
+        public ReactiveProperty<float> AddedScore { get; private set; }
         public ReactiveProperty<bool> WinComdition { get; private set; }
-        public int MaxScore { get; private set; } = 1500;
+        public int MaxScore { get; private set; } = 3000;
 
         public SoupModel()
         {
-            CurrentScore = new ReactiveProperty<int>(0);
+            CurrentScore = new ReactiveProperty<float>(0);
             WinComdition = new ReactiveProperty<bool>(false);
-            AddedScore = new ReactiveProperty<int>(0);
+            AddedScore = new ReactiveProperty<float>(0);
         }
 
-        public void UpdateScore(int score)
+        public void UpdateScore(float score)
         {
             AddedScore.Value = score;
-            
-            if (AddedScore.Value + score >= 0)
+
+            if (CurrentScore.Value + score >= 0)
                 CurrentScore.Value += score;
-
+            
             CheckWin();
-
-            /*if(CurrentScore.Value < 0)
-                CurrentScore.Value = 0;*/
         }
 
         private void CheckWin()

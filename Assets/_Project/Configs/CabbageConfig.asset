@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CabbageConfig
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Cabbage
-  <Score>k__BackingField: 15
+  <Score>k__BackingField: 5
   <Speed>k__BackingField: 5
   <IsGood>k__BackingField: 1

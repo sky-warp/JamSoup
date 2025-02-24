@@ -11,7 +11,7 @@ namespace _Project.Scripts.VegetableEntity
         public bool IsSpawned { get; private set; }
 
         public float Speed { get; private set; }
-        public int Score { get; private set; }
+        public float Score { get; private set; }
         public bool IsGood { get; private set; }
         public bool IsReadyForMove { get; private set; }
 

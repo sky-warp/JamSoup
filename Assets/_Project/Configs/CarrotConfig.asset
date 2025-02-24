@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CarrotConfig
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Carrot
-  <Score>k__BackingField: 10
+  <Score>k__BackingField: 5
   <Speed>k__BackingField: 7
   <IsGood>k__BackingField: 1

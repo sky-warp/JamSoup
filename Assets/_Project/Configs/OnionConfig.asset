@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: OnionConfig
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Onion
-  <Score>k__BackingField: -20
+  <Score>k__BackingField: -5
   <Speed>k__BackingField: 2.5
   <IsGood>k__BackingField: 0

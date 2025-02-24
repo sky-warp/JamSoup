@@ -4,7 +4,7 @@ namespace _Project.Scripts.Vegetables
 {
     public class VegetableModel
     {
-        public int Score { get; private set; }
+        public float Score { get; private set; }
         
         public VegetableModel CreateNewVeg(VegetableConfig config)
         {

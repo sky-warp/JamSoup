@@ -5,8 +5,8 @@ namespace _Project.Scripts.Soup
 {
     public class SoupViewModel
     {
-        public ReactiveProperty<int> ScoreView { get; private set; }
-        public ReactiveProperty<int> AddedScoreView { get; private set; }
+        public ReactiveProperty<float> ScoreView { get; private set; }
+        public ReactiveProperty<float> AddedScoreView { get; private set; }
         public ReactiveProperty<VegetableModel> Vegetable { get; private set; }
         public ReactiveProperty<bool> WinConditionView { get; private set; }
 
@@ -34,7 +34,7 @@ namespace _Project.Scripts.Soup
         {
             if (Vegetable.Value != null)
             {
-                int score = Vegetable.Value.Score;
+                float score = Vegetable.Value.Score;
                 _soupModel.UpdateScore(score);
             }
         }

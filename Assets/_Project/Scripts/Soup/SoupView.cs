@@ -46,23 +46,13 @@ namespace _Project.Scripts.Soup
                 .AddTo(_disposable); 
             
             _viewModel.AddedScoreView
-                .Subscribe(SubstractHealth)
+                .Subscribe(UpdateHealth)
                 .AddTo(_disposable);
 
             _spawnManager.OnGameEnded += GameEnd;
         }
 
-        private void UpdateViewScore(int score)
-        {
-            _text.text = score.ToString();
-        }
-
-        private void UpdateHealth(int score)
-        {
-            _healthBarImage.fillAmount += score / _maxScore;
-        }
-
-        private void SubstractHealth(int score)
+        private void UpdateHealth(float score)
         {
             _healthBarImage.fillAmount += score / _maxScore;
         }
